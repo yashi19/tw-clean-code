@@ -20,25 +20,8 @@ public class Customer {
     }
 
     public String statement() {
-        return textHeader() + textBody() + textFooter();
-    }
-
-  private String textBody() {
-      String statement = "";
-      for (Rental each : rentals) {
-        statement += "\t" + each.getMovie().getTitle() + "\t" + each.amount() + "\n";
-      }
-      return statement;
-  }
-
-  private String textFooter() {
-        String footer = "Amount owed is " + totalAmount() + "\n";
-        footer += "You earned " + totalFrequentRenterPoints() + " frequent renter points";
-        return footer;
-    }
-
-    private String textHeader() {
-        return "Rental Record for " + name + "\n";
+        TextStatement textStatement = new TextStatement(name, rentals, totalAmount(), totalFrequentRenterPoints());
+        return textStatement.statement();
     }
 
     private int totalFrequentRenterPoints() {
@@ -55,6 +38,11 @@ public class Customer {
             totalAmount += each.amount();
         }
         return totalAmount;
+    }
+
+    public String htmlStatement() {
+        HtmlStatement htmlStatement = new HtmlStatement(name, rentals, totalAmount(), totalFrequentRenterPoints());
+        return htmlStatement.statement();
     }
 
 }
